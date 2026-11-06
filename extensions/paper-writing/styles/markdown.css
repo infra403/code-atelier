@@ -1,0 +1,113 @@
+/* Paper: warm off-white, charcoal ink, terracotta. No external assets. */
+body[data-vscode-theme-id="纸页 · Claude"] {
+  --paper: #faf9f5; --ink: #30302c; --heading: #141413;
+  --muted: #737269; --accent: #a14e32; --rule: #e1e0dc; --wash: #f0eee6;
+  box-sizing: border-box;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 44px 96px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: var(--markdown-font-size, 17px);
+  line-height: var(--markdown-line-height, 1.9);
+  overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
+}
+body[data-vscode-theme-id="纸页 · Claude"] :is(h1,h2,h3,h4,h5,h6) {
+  color: var(--heading); font-weight: 650; line-height: 1.5;
+  letter-spacing: -0.015em; border-bottom: 0; padding-bottom: 0;
+}
+body[data-vscode-theme-id="纸页 · Claude"] h1 {
+  font-size: 1.9em; margin: 0 0 1.15em; padding-bottom: 0.75em; border-bottom: 1px solid var(--rule);
+}
+body[data-vscode-theme-id="纸页 · Claude"] h2 {
+  font-size: 1.4em; margin: 2.2em 0 0.85em;
+}
+body[data-vscode-theme-id="纸页 · Claude"] h3 { font-size: 1.15em; margin: 1.7em 0 0.75em; }
+body[data-vscode-theme-id="纸页 · Claude"] :is(h4,h5,h6) { font-size: 1em; margin: 1.5em 0 0.65em; }
+body[data-vscode-theme-id="纸页 · Claude"] p { margin: 0 0 1.1em; }
+body[data-vscode-theme-id="纸页 · Claude"] strong { font-weight: 650; color: var(--heading); }
+body[data-vscode-theme-id="纸页 · Claude"] a { color: var(--accent); text-decoration: underline; text-decoration-color: #c05f3c55; text-underline-offset: 0.2em; }
+body[data-vscode-theme-id="纸页 · Claude"] a:hover { text-decoration-color: currentColor; }
+body[data-vscode-theme-id="纸页 · Claude"] :is(ul,ol) { padding-left: 1.6em; margin: 0 0 1.15em; }
+body[data-vscode-theme-id="纸页 · Claude"] li { margin: 0.32em 0; }
+body[data-vscode-theme-id="纸页 · Claude"] li::marker { color: var(--muted); }
+body[data-vscode-theme-id="纸页 · Claude"] li > p { margin-bottom: 0.55em; }
+body[data-vscode-theme-id="纸页 · Claude"] blockquote {
+  margin: 1.6em 0; padding: 14px 22px; border-left: 3px solid #c05f3c;
+  border-radius: 0; background: #f3f0e8; color: #4c4b45;
+}
+body[data-vscode-theme-id="纸页 · Claude"] blockquote > :last-child { margin-bottom: 0; }
+body[data-vscode-theme-id="纸页 · Claude"] code { font-family: "SF Mono", Menlo, Monaco, "PingFang SC", monospace; font-size: 0.88em; }
+body[data-vscode-theme-id="纸页 · Claude"] :not(pre) > code {
+  background: var(--wash); color: #94492f; padding: 0.14em 0.34em; border-radius: 3px;
+}
+body[data-vscode-theme-id="纸页 · Claude"] pre {
+  padding: 20px 22px; margin: 1.45em 0; border: 1px solid var(--rule); border-radius: 5px;
+  background: var(--wash); line-height: 1.7; overflow: auto;
+}
+body[data-vscode-theme-id="纸页 · Claude"] pre code { padding: 0; background: transparent; color: var(--ink); line-height: inherit; }
+body[data-vscode-theme-id="纸页 · Claude"] table {
+  display: block; width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1.5em 0; font-size: 0.94em;
+}
+body[data-vscode-theme-id="纸页 · Claude"] :is(th,td) { border-bottom: 1px solid var(--rule); padding: 12px 14px; vertical-align: top; }
+body[data-vscode-theme-id="纸页 · Claude"] th { background: var(--wash); color: var(--heading); font-weight: 600; }
+body[data-vscode-theme-id="纸页 · Claude"] img { display: block; max-width: 100%; height: auto; margin: 1.6em auto 0.8em; }
+body[data-vscode-theme-id="纸页 · Claude"] hr { height: 0; border: 0; border-top: 1px solid var(--rule); margin: 2.4em 0; }
+body[data-vscode-theme-id="纸页 · Claude"] input[type="checkbox"] { accent-color: #a14e32; }
+body[data-vscode-theme-id="纸页 · Claude"] .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.5em 0; }
+body[data-vscode-theme-id="纸页 · Claude"] .mermaid { margin: 1.5em auto; text-align: center; }
+body[data-vscode-theme-id="纸页 · Claude"] ::selection { background: #e7d8c9; }
+@media (max-width: 600px) {
+  body[data-vscode-theme-id="纸页 · Claude"] { padding: 30px 24px 64px; }
+  body[data-vscode-theme-id="纸页 · Claude"] h1 { font-size: 1.6em; }
+}
+@media print {
+  body[data-vscode-theme-id="纸页 · Claude"] { max-width: none; padding: 0; color: #222; background: white; font-size: 11pt; }
+  body[data-vscode-theme-id="纸页 · Claude"] :is(h1,h2,h3) { break-after: avoid; }
+  body[data-vscode-theme-id="纸页 · Claude"] :is(pre,blockquote,img,tr) { break-inside: avoid; }
+}
+
+/* Soft marker edges, including notes created by the original yellow pen. */
+body[data-vscode-theme-id="纸页 · Claude"] mark {
+  padding: 0.08em 0.28em;
+  margin: 0 0.06em;
+  border-radius: 0.24em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: inherit;
+}
+body[data-vscode-theme-id="纸页 · Claude"] span[style*="color:"] :is(strong, em, u, del, s),
+body[data-vscode-theme-id="纸页 · Claude"] mark :is(strong, em, u, del, s) { color: inherit; }
+body[data-vscode-theme-id="纸页 · Claude"] u {
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 1.25px;
+  text-underline-offset: 0.22em;
+}
+
+/* Match diagrams to the paper theme; retain the renderer's pan/zoom geometry. */
+body[data-vscode-theme-id="纸页 · Claude"] .mermaid-wrapper {
+  margin: 1.6em 0;
+  border: 1px solid #ded8cd;
+  border-radius: 8px;
+  background: #f7f5ee;
+}
+body[data-vscode-theme-id="纸页 · Claude"] .mermaid :is(p, .nodeLabel p, .edgeLabel p) {
+  margin: 0;
+  line-height: 1.5;
+}
+body[data-vscode-theme-id="纸页 · Claude"] .mermaid .node rect:not([style*="fill"]) {
+  fill: #f2e9dd !important;
+  stroke: #b58b72 !important;
+  stroke-width: 1.2px !important;
+  rx: 6px;
+  ry: 6px;
+}
+body[data-vscode-theme-id="纸页 · Claude"] .mermaid .flowchart-link:not([style*="stroke:"]) {
+  stroke: #997a66 !important;
+  stroke-width: 1.5px !important;
+}
+body[data-vscode-theme-id="纸页 · Claude"] .mermaid .arrowMarkerPath { fill: #997a66 !important; stroke: #997a66 !important; }
+body[data-vscode-theme-id="纸页 · Claude"] .mermaid .nodeLabel { color: #30302c !important; }
+body[data-vscode-theme-id="纸页 · Claude"] .mermaid svg { font-family: -apple-system, "PingFang SC", sans-serif !important; }

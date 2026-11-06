@@ -1,0 +1,477 @@
+{
+  "name": "paper-writing",
+  "displayName": "纸页 · Claude 风格写作",
+  "description": "Claude 暖白写作主题；六色文字、六色荧光笔、加粗与更多标记。",
+  "version": "1.1.0",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Themes",
+    "Other"
+  ],
+  "license": "MIT",
+  "contributes": {
+    "themes": [
+      {
+        "id": "纸页 · Claude",
+        "label": "纸页 · Claude",
+        "uiTheme": "vs",
+        "path": "./themes/paper-claude.json"
+      }
+    ],
+    "markdown.previewStyles": [
+      "./styles/markdown.css"
+    ],
+    "commands": [
+      {
+        "command": "paperWriting.toggleBold",
+        "title": "加粗（再次点击取消）",
+        "category": "纸页",
+        "icon": "$(bold)",
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.toggleColor",
+        "title": "文字颜色：应用已配置颜色（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/text-color.svg",
+          "dark": "./icons/text-color-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.toggleHighlight",
+        "title": "荧光笔：应用已配置颜色（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/highlight.svg",
+          "dark": "./icons/highlight-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.moreMarks",
+        "title": "更多标记：斜体、下划线、删除线",
+        "category": "纸页",
+        "icon": "$(text-size)",
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.paletteSettings",
+        "title": "配色设置：记住文字色和荧光笔色",
+        "category": "纸页",
+        "icon": "$(symbol-color)"
+      },
+      {
+        "command": "paperWriting.color.terracotta",
+        "title": "文字颜色：陶土橙（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-color-terracotta.svg",
+          "dark": "./icons/action-color-terracotta-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.color.sage",
+        "title": "文字颜色：松叶绿（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-color-sage.svg",
+          "dark": "./icons/action-color-sage-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.color.blue",
+        "title": "文字颜色：墨水蓝（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-color-blue.svg",
+          "dark": "./icons/action-color-blue-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.color.plum",
+        "title": "文字颜色：烟紫（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-color-plum.svg",
+          "dark": "./icons/action-color-plum-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.color.rose",
+        "title": "文字颜色：酒红（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-color-rose.svg",
+          "dark": "./icons/action-color-rose-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.color.graphite",
+        "title": "文字颜色：石墨灰（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-color-graphite.svg",
+          "dark": "./icons/action-color-graphite-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.highlight.yellow",
+        "title": "荧光笔：奶油黄（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-highlight-yellow.svg",
+          "dark": "./icons/action-highlight-yellow-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.highlight.peach",
+        "title": "荧光笔：杏桃橙（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-highlight-peach.svg",
+          "dark": "./icons/action-highlight-peach-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.highlight.sage",
+        "title": "荧光笔：鼠尾草绿（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-highlight-sage.svg",
+          "dark": "./icons/action-highlight-sage-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.highlight.blue",
+        "title": "荧光笔：雾蓝（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-highlight-blue.svg",
+          "dark": "./icons/action-highlight-blue-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.highlight.lavender",
+        "title": "荧光笔：淡薰衣草（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-highlight-lavender.svg",
+          "dark": "./icons/action-highlight-lavender-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      },
+      {
+        "command": "paperWriting.highlight.rose",
+        "title": "荧光笔：玫瑰粉（再次点击取消）",
+        "category": "纸页",
+        "icon": {
+          "light": "./icons/action-highlight-rose.svg",
+          "dark": "./icons/action-highlight-rose-dark.svg"
+        },
+        "enablement": "editorLangId == markdown && editorHasSelection && !editorReadonly"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "paperWriting.toggleBold",
+          "when": "editorLangId == markdown",
+          "group": "navigation@0.1"
+        },
+        {
+          "command": "paperWriting.color.terracotta",
+          "when": "editorLangId == markdown && config.paperWriting.textColor != sage && config.paperWriting.textColor != blue && config.paperWriting.textColor != plum && config.paperWriting.textColor != rose && config.paperWriting.textColor != graphite",
+          "group": "navigation@0.2"
+        },
+        {
+          "command": "paperWriting.color.sage",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == sage",
+          "group": "navigation@0.2"
+        },
+        {
+          "command": "paperWriting.color.blue",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == blue",
+          "group": "navigation@0.2"
+        },
+        {
+          "command": "paperWriting.color.plum",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == plum",
+          "group": "navigation@0.2"
+        },
+        {
+          "command": "paperWriting.color.rose",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == rose",
+          "group": "navigation@0.2"
+        },
+        {
+          "command": "paperWriting.color.graphite",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == graphite",
+          "group": "navigation@0.2"
+        },
+        {
+          "command": "paperWriting.highlight.yellow",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor != peach && config.paperWriting.highlightColor != sage && config.paperWriting.highlightColor != blue && config.paperWriting.highlightColor != lavender && config.paperWriting.highlightColor != rose",
+          "group": "navigation@0.3"
+        },
+        {
+          "command": "paperWriting.highlight.peach",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == peach",
+          "group": "navigation@0.3"
+        },
+        {
+          "command": "paperWriting.highlight.sage",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == sage",
+          "group": "navigation@0.3"
+        },
+        {
+          "command": "paperWriting.highlight.blue",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == blue",
+          "group": "navigation@0.3"
+        },
+        {
+          "command": "paperWriting.highlight.lavender",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == lavender",
+          "group": "navigation@0.3"
+        },
+        {
+          "command": "paperWriting.highlight.rose",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == rose",
+          "group": "navigation@0.3"
+        },
+        {
+          "command": "paperWriting.paletteSettings",
+          "when": "editorLangId == markdown",
+          "group": "navigation@0.35"
+        },
+        {
+          "command": "paperWriting.moreMarks",
+          "when": "editorLangId == markdown",
+          "group": "navigation@0.4"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "paperWriting.toggleBold",
+          "when": "editorLangId == markdown && editorHasSelection",
+          "group": "1_paperWriting@1"
+        },
+        {
+          "command": "paperWriting.color.terracotta",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.textColor != sage && config.paperWriting.textColor != blue && config.paperWriting.textColor != plum && config.paperWriting.textColor != rose && config.paperWriting.textColor != graphite",
+          "group": "1_paperWriting@2"
+        },
+        {
+          "command": "paperWriting.color.sage",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.textColor == sage",
+          "group": "1_paperWriting@2"
+        },
+        {
+          "command": "paperWriting.color.blue",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.textColor == blue",
+          "group": "1_paperWriting@2"
+        },
+        {
+          "command": "paperWriting.color.plum",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.textColor == plum",
+          "group": "1_paperWriting@2"
+        },
+        {
+          "command": "paperWriting.color.rose",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.textColor == rose",
+          "group": "1_paperWriting@2"
+        },
+        {
+          "command": "paperWriting.color.graphite",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.textColor == graphite",
+          "group": "1_paperWriting@2"
+        },
+        {
+          "command": "paperWriting.highlight.yellow",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.highlightColor != peach && config.paperWriting.highlightColor != sage && config.paperWriting.highlightColor != blue && config.paperWriting.highlightColor != lavender && config.paperWriting.highlightColor != rose",
+          "group": "1_paperWriting@3"
+        },
+        {
+          "command": "paperWriting.highlight.peach",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.highlightColor == peach",
+          "group": "1_paperWriting@3"
+        },
+        {
+          "command": "paperWriting.highlight.sage",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.highlightColor == sage",
+          "group": "1_paperWriting@3"
+        },
+        {
+          "command": "paperWriting.highlight.blue",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.highlightColor == blue",
+          "group": "1_paperWriting@3"
+        },
+        {
+          "command": "paperWriting.highlight.lavender",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.highlightColor == lavender",
+          "group": "1_paperWriting@3"
+        },
+        {
+          "command": "paperWriting.highlight.rose",
+          "when": "editorLangId == markdown && editorHasSelection && config.paperWriting.highlightColor == rose",
+          "group": "1_paperWriting@3"
+        },
+        {
+          "command": "paperWriting.moreMarks",
+          "when": "editorLangId == markdown && editorHasSelection",
+          "group": "1_paperWriting@4"
+        },
+        {
+          "command": "paperWriting.paletteSettings",
+          "when": "editorLangId == markdown",
+          "group": "1_paperWriting@5"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "paperWriting.toggleColor",
+          "when": "false"
+        },
+        {
+          "command": "paperWriting.toggleHighlight",
+          "when": "false"
+        },
+        {
+          "command": "paperWriting.color.terracotta",
+          "when": "editorLangId == markdown && config.paperWriting.textColor != sage && config.paperWriting.textColor != blue && config.paperWriting.textColor != plum && config.paperWriting.textColor != rose && config.paperWriting.textColor != graphite"
+        },
+        {
+          "command": "paperWriting.color.sage",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == sage"
+        },
+        {
+          "command": "paperWriting.color.blue",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == blue"
+        },
+        {
+          "command": "paperWriting.color.plum",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == plum"
+        },
+        {
+          "command": "paperWriting.color.rose",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == rose"
+        },
+        {
+          "command": "paperWriting.color.graphite",
+          "when": "editorLangId == markdown && config.paperWriting.textColor == graphite"
+        },
+        {
+          "command": "paperWriting.highlight.yellow",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor != peach && config.paperWriting.highlightColor != sage && config.paperWriting.highlightColor != blue && config.paperWriting.highlightColor != lavender && config.paperWriting.highlightColor != rose"
+        },
+        {
+          "command": "paperWriting.highlight.peach",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == peach"
+        },
+        {
+          "command": "paperWriting.highlight.sage",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == sage"
+        },
+        {
+          "command": "paperWriting.highlight.blue",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == blue"
+        },
+        {
+          "command": "paperWriting.highlight.lavender",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == lavender"
+        },
+        {
+          "command": "paperWriting.highlight.rose",
+          "when": "editorLangId == markdown && config.paperWriting.highlightColor == rose"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "纸页 · 写作标记",
+      "properties": {
+        "paperWriting.textColor": {
+          "type": "string",
+          "scope": "application",
+          "default": "terracotta",
+          "enum": [
+            "terracotta",
+            "sage",
+            "blue",
+            "plum",
+            "rose",
+            "graphite"
+          ],
+          "enumDescriptions": [
+            "陶土橙",
+            "松叶绿",
+            "墨水蓝",
+            "烟紫",
+            "酒红",
+            "石墨灰"
+          ],
+          "description": "A 按钮直接应用的文字颜色。也可通过编辑器工具栏的“配色设置”修改。"
+        },
+        "paperWriting.highlightColor": {
+          "type": "string",
+          "scope": "application",
+          "default": "yellow",
+          "enum": [
+            "yellow",
+            "peach",
+            "sage",
+            "blue",
+            "lavender",
+            "rose"
+          ],
+          "enumDescriptions": [
+            "奶油黄",
+            "杏桃橙",
+            "鼠尾草绿",
+            "雾蓝",
+            "淡薰衣草",
+            "玫瑰粉"
+          ],
+          "description": "荧光笔按钮直接应用的高亮颜色。也可通过编辑器工具栏的“配色设置”修改。"
+        }
+      }
+    }
+  },
+  "main": "./extension.js",
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "Formatting commands are enabled in trusted writing workspaces."
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/infra403/vscode-claude-dev-setup.git",
+    "directory": "extensions/paper-writing"
+  },
+  "files": [
+    "extension.js",
+    "marking.js",
+    "styles/**",
+    "themes/**",
+    "icons/**",
+    "README.md",
+    "LICENSE"
+  ]
+}

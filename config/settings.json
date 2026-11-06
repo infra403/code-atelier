@@ -1,0 +1,194 @@
+{
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+    "editor.fontFamily": "Menlo, Consolas, \"Cascadia Mono\", \"PingFang SC\", \"Microsoft YaHei\", monospace",
+    "editor.fontSize": 17,
+    "editor.lineHeight": 32,
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 90,
+    "editor.wrappingIndent": "none",
+    "editor.lineNumbers": "off",
+    "editor.minimap.enabled": false,
+    "editor.glyphMargin": false,
+    "editor.folding": true,
+    "editor.showFoldingControls": "mouseover",
+    "editor.guides.indentation": false,
+    "editor.guides.bracketPairs": false,
+    "editor.bracketPairColorization.enabled": false,
+    "editor.stickyScroll.enabled": false,
+    "editor.padding.top": 28,
+    "editor.padding.bottom": 40,
+    "editor.renderLineHighlight": "none",
+    "editor.renderWhitespace": "selection",
+    "editor.scrollBeyondLastLine": false,
+    "editor.quickSuggestions": {
+      "other": "off",
+      "comments": "off",
+      "strings": "off"
+    },
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.wordBasedSuggestions": "off",
+    "editor.inlineSuggest.enabled": false,
+    "files.trimTrailingWhitespace": false,
+    "editor.cursorStyle": "line",
+    "editor.cursorWidth": 2,
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.hover.delay": 400,
+    "editor.hover.sticky": true
+  },
+  "workbench.preferredLightColorTheme": "纸页 · Claude",
+  "window.autoDetectColorScheme": false,
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.editor.tabActionCloseVisibility": true,
+  "workbench.tree.indent": 16,
+  "workbench.tree.renderIndentGuides": "onHover",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "zenMode.fullScreen": false,
+  "zenMode.centerLayout": true,
+  "zenMode.hideLineNumbers": true,
+  "zenMode.hideStatusBar": true,
+  "zenMode.showTabs": "single",
+  "markdown.preview.fontFamily": "-apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+  "markdown.preview.fontSize": 17,
+  "markdown.preview.lineHeight": 1.9,
+  "markdown.preview.scrollPreviewWithEditor": true,
+  "markdown.preview.scrollEditorWithPreview": true,
+  "markdown.extension.showActionButtons": false,
+  "workbench.colorTheme": "纸页 · Claude",
+  "workbench.colorCustomizations": {
+    "[纸页 · Claude]": {
+      "toolbar.hoverBackground": "#eae6dc",
+      "toolbar.activeBackground": "#e2d7c8",
+      "toolbar.hoverOutline": "#c9bcaa",
+      "editorHoverWidget.background": "#faf9f5",
+      "editorHoverWidget.foreground": "#30302c",
+      "editorHoverWidget.border": "#dedbd1",
+      "editorHoverWidget.highlightForeground": "#a14e32",
+      "quickInputList.focusBackground": "#eae4d8",
+      "quickInputList.focusForeground": "#30302c",
+      "quickInputList.focusIconForeground": "#a14e32"
+    }
+  },
+  "markdown-mermaid.lightModeTheme": "vscode",
+  "markdown-mermaid.controls.show": "always",
+  "markdown-mermaid.mouseNavigation.enabled": "alt",
+  "markdown-mermaid.resizable": true,
+  "paperWriting.textColor": "terracotta",
+  "paperWriting.highlightColor": "yellow",
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "python.terminal.activateEnvironment": true,
+  "python-envs.terminal.autoActivationType": "command",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "eslint.format.enable": false,
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.formatOnSave": true,
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "go.useLanguageServer": true,
+  "go.formatTool": "default",
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true
+  },
+  "search.exclude": {
+    "**/.venv": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true
+  },
+  "chatgpt.localeOverride": "zh-CN"
+}

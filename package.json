@@ -1,0 +1,15 @@
+{
+  "name": "vscode-claude-dev-setup",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "check": "node --test tests/*.test.*",
+    "build:extension": "cd extensions/paper-writing && vsce package --no-dependencies --out ../../dist/paper-writing-1.1.0.vsix"
+  },
+  "dependencies": { "jsonc-parser": "3.3.1" },
+  "devDependencies": { "@vscode/vsce": "4.1.0" },
+  "overrides": { "minimatch": "11.0.5" }
+}

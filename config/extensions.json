@@ -1,0 +1,14 @@
+[
+  "ms-python.python",
+  "ms-python.vscode-pylance",
+  "ms-python.debugpy",
+  "ms-python.vscode-python-envs",
+  "charliermarsh.ruff",
+  "dbaeumer.vscode-eslint",
+  "esbenp.prettier-vscode",
+  "golang.go",
+  "Vue.volar",
+  "EditorConfig.EditorConfig",
+  "yzhang.markdown-all-in-one",
+  "openai.chatgpt"
+]
