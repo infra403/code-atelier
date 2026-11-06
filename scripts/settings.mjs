@@ -57,9 +57,9 @@ export function restoreSettings(original, changes) {
 }
 
 export function settingsPath(platform, home, env = process.env) {
-  if (platform === 'darwin') return path.join(home, 'Library', 'Application Support', 'Code', 'User', 'settings.json');
+  if (platform === 'darwin') return path.posix.join(home, 'Library', 'Application Support', 'Code', 'User', 'settings.json');
   if (platform === 'win32') return path.win32.join(env.APPDATA || path.win32.join(home, 'AppData', 'Roaming'), 'Code', 'User', 'settings.json');
-  return path.join(env.XDG_CONFIG_HOME || path.join(home, '.config'), 'Code', 'User', 'settings.json');
+  return path.posix.join(env.XDG_CONFIG_HOME || path.posix.join(home, '.config'), 'Code', 'User', 'settings.json');
 }
 
 export function writeAtomic(file, text) {
