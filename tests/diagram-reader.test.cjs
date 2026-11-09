@@ -1,6 +1,13 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { readableScale, fitScale } = require('../extensions/paper-writing/diagram-reader');
+const { readableScale, fitScale, isViewerEndpoint } = require('../extensions/paper-writing/diagram-reader');
+
+test('diagram links only target the installed viewer URI handler', () => {
+  const suffix='/diagram/'+'a'.repeat(48)+'/';
+  assert.ok(isViewerEndpoint('vscode://local.paper-writing'+suffix));
+  assert.ok(isViewerEndpoint('vscode-insiders://local.paper-writing'+suffix));
+  for(const url of ['https://local.paper-writing'+suffix,'https://example.com/', 'vscode://other.extension'+suffix, undefined]) assert.equal(isViewerEndpoint(url),false);
+});
 
 test('wide diagrams open with readable text instead of being shrunk to the column', () => {
   assert.equal(readableScale(16), 1.25);

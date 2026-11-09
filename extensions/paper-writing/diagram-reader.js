@@ -4,7 +4,8 @@
   const readableScale = fontSize => clamp(20 / (Number(fontSize) || 16), 1, 2);
   const fitScale = (width, height, viewportWidth, viewportHeight) =>
     clamp(Math.min((viewportWidth - 48) / width, (viewportHeight - 48) / height, 1.25), 0.02, 5);
-  if (typeof module !== 'undefined') module.exports = { readableScale, fitScale };
+  const isViewerEndpoint = url => /^vscode(?:-insiders)?:\/\/local\.paper-writing\/diagram\/[a-f0-9]{48}\/$/.test(url || '');
+  if (typeof module !== 'undefined') module.exports = { readableScale, fitScale, isViewerEndpoint };
   if (typeof document === 'undefined') return;
 
   window.__paperDiagramReader?.dispose();
@@ -19,7 +20,7 @@
   }
   async function standaloneLink(svg) {
     const base = document.querySelector('.paper-viewer-endpoint')?.dataset.url;
-    if (!base) throw new Error('请刷新预览后再试');
+    if (!isViewerEndpoint(base)) throw new Error('请刷新预览后再试');
     const copy = svg.cloneNode(true);
     const originals = [svg, ...svg.querySelectorAll('*')], copies = [copy, ...copy.querySelectorAll('*')];
     const properties = ['font-family','font-size','font-weight','font-style','line-height','letter-spacing','word-spacing','color','fill','stroke','stroke-width','stroke-dasharray','stroke-linecap','stroke-linejoin','opacity','fill-opacity','stroke-opacity','text-anchor','dominant-baseline','white-space','text-align','display','margin','padding','background-color','border-radius','rx','ry','marker-start','marker-mid','marker-end','clip-path'];
