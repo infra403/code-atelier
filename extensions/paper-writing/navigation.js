@@ -2,7 +2,7 @@
 const vscode = require('vscode');
 const path = require('node:path');
 const fs = require('node:fs');
-const { buildBook, findBookRoot, shelf, position, neighbour, navHTML, inside } = require('./book-index');
+const { buildBook, findBookRoot, shelf, position, neighbour, chapterRows, navHTML, inside } = require('./book-index');
 
 function registerNavigation(context) {
   const cache = new Map();
@@ -88,7 +88,10 @@ function registerNavigation(context) {
   async function chooseChapter(resource) {
     const uri=current(resource), book=bookFor(uri); if (!book) return chooseBook();
     const at=position(book,uri.fsPath);
-    const chosen=await vscode.window.showQuickPick(book.chapters.map((chapter,i)=>({label:`${i===at?'$(check) ':' '}${i+1}. ${chapter.title}`,description:chapter.group,file:chapter.file})), {title:book.title,placeHolder:'输入章节名或序号 · 支持跨分册跳转',matchOnDescription:true});
+    const items=chapterRows(book).map(row=>row.type==='group'
+      ? {label:'　'.repeat(row.depth)+row.title,kind:vscode.QuickPickItemKind.Separator}
+      : {label:`${row.index===at?'$(check) ':' '}${row.index+1}. ${row.chapter.title}`,description:row.breadcrumb,file:row.chapter.file});
+    const chosen=await vscode.window.showQuickPick(items, {title:book.title,placeHolder:'输入章节、分册或分类名 · 所有分类默认展开',matchOnDescription:true});
     if(chosen) await open(chosen.file);
   }
   async function addLibrary() {

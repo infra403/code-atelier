@@ -2,7 +2,7 @@
   "name": "paper-writing",
   "displayName": "纸页 · Claude 风格写作",
   "description": "Claude 暖白写作主题、多色标记与跨分册书架导航。",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "publisher": "local",
   "engines": {
     "vscode": "^1.85.0"

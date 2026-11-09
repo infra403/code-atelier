@@ -16,11 +16,15 @@
 .paper-book-nav a:focus-visible, .paper-book-nav summary:focus-visible, .paper-book-footer a:focus-visible { outline: 2px solid var(--nav-accent); outline-offset: 2px; }
 .paper-book-nav [aria-disabled], .paper-book-footer [aria-disabled] { opacity: .45; }
 .paper-book-nav summary { cursor: pointer; white-space: nowrap; padding: 5px 8px; border-radius: 5px; }
-.paper-book-nav details > ol, .paper-book-nav details > ul { position: absolute; left: 0; right: 0; top: 100%; box-sizing: border-box; margin: 6px 0 0 !important; padding: 8px !important; list-style: none; max-height: 55vh; overflow: auto; border: 1px solid var(--nav-border); border-radius: 8px; background: var(--nav-bg); box-shadow: 0 8px 24px #00000014; }
+.paper-book-nav .paper-chapter-list > ol, .paper-book-nav .paper-shelf > ul { position: absolute; left: 0; right: 0; top: 100%; box-sizing: border-box; margin: 6px 0 0 !important; padding: 8px !important; list-style: none; max-height: 55vh; overflow: auto; border: 1px solid var(--nav-border); border-radius: 8px; background: var(--nav-bg); box-shadow: 0 8px 24px #00000014; }
 .paper-book-nav li { margin: 0 !important; padding: 6px 8px !important; border-radius: 5px; }
 .paper-book-nav li a { display: block; padding: 3px 0; overflow-wrap: anywhere; }
 .paper-book-nav li small { display: block; opacity: .65; font-size: 11px; overflow-wrap: anywhere; }
 .paper-book-nav li.paper-current { background: var(--vscode-list-inactiveSelectionBackground, #eae4d8); border-left: 3px solid var(--nav-accent); }
+.paper-book-nav li.paper-toc-category { padding: 4px 2px !important; }
+.paper-book-nav .paper-toc-group > summary { white-space: normal; font-weight: 600; color: var(--nav-ink); padding: 9px 8px; }
+.paper-book-nav .paper-toc-group > ol { position: static; list-style: none; margin: 0 0 4px 14px !important; padding: 0 0 0 10px !important; border-left: 1px solid var(--nav-border); }
+.paper-book-nav .paper-toc-group .paper-toc-group > summary { font-size: 12px; }
 .paper-book-footer { display: flex; justify-content: space-between; gap: 16px; margin-top: 48px; padding: 20px 0; border-top: 1px solid var(--nav-border); }
 @media print { .paper-book-nav, .paper-book-footer { display: none !important; } }
 @media (max-width: 500px) { .paper-book-nav { padding: 8px; } .paper-book-controls { gap: 2px; } .paper-book-title { gap: 4px; } }

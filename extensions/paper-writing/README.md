@@ -29,6 +29,6 @@
 
 ## 安装与维护
 
-本扩展随 [VS Code 配置仓库](https://github.com/infra403/vscode-claude-dev-setup) 提供；使用根目录安装脚本，或通过“扩展：从 VSIX 安装”选择 `dist/paper-writing-1.2.0.vsix`。
+本扩展随 [VS Code 配置仓库](https://github.com/infra403/vscode-claude-dev-setup) 提供；使用根目录安装脚本，或通过“扩展：从 VSIX 安装”选择 `dist/paper-writing-1.2.1.vsix`。
 
 源代码、调色板和图标均包含在仓库中。只对 Markdown 选区进行标记；支持撤销。颜色与高亮使用内联 HTML，需要支持 HTML 的 Markdown 预览器。

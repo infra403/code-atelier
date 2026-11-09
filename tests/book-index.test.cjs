@@ -1,7 +1,7 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os');
-const {buildBook,findBookRoot,neighbour,navHTML,localDestination}=require('../extensions/paper-writing/book-index');
+const {buildBook,findBookRoot,neighbour,chapterTree,chapterRows,navHTML,localDestination}=require('../extensions/paper-writing/book-index');
 function fixture(fn){const root=fs.mkdtempSync(path.join(os.tmpdir(),'paper-books-'));const write=(file,text)=>{const p=path.join(root,file);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,text);return p;};try{fn(root,write);}finally{fs.rmSync(root,{recursive:true,force:true});}}
 test('table of contents crosses nested volumes in authored order, deduplicating links',()=>fixture((root,write)=>{
   write('README.md','# 合集\n[第二册](manuscript/B/README.md)\n[第一册](manuscript/A/README.md)\n[重复](manuscript/B/02.md)');
@@ -42,4 +42,19 @@ test('navigation markup escapes titles and supplies local hrefs without altering
   const html=navHTML(book,first).top;
   assert.match(html,/aria-current="page"/);assert.match(html,/data-href="%E4%BA%8C.md"/);assert.doesNotMatch(html,/<img/);
   assert.equal(fs.readFileSync(first,'utf8'),original);assert.ok(neighbour(book,first,1).file===second);
+}));
+test('nested categories use authored names, retain depth and are all expanded by default',()=>fixture((root,write)=>{
+  write('README.md','# 总书\n[第一册：入门](manuscript/one/README.md)\n[第二册：进阶](manuscript/two/README.md)');
+  write('manuscript/one/README.md','# 入门\n[基础知识](basics/README.md)');
+  write('manuscript/one/basics/README.md','# 基础知识\n[第一章](01.md)');
+  write('manuscript/two/README.md','# 进阶\n[第二章](02.md)');
+  const first=write('manuscript/one/basics/01.md','# 第一章');write('manuscript/two/02.md','# 第二章');
+  const book=buildBook(root),tree=chapterTree(book);
+  assert.deepEqual(tree.map(n=>n.title),['第一册：入门','第二册：进阶']);
+  assert.equal(tree[0].children[0].title,'基础知识');
+  assert.equal(tree[0].children[0].children[0].type,'chapter');
+  const html=navHTML(book,first).top;
+  assert.equal((html.match(/class="paper-toc-group" open/g)||[]).length,3);
+  assert.equal((html.match(/aria-current="page"/g)||[]).length,1);
+  assert.deepEqual(chapterRows(book).filter(n=>n.type==='chapter').map(n=>n.breadcrumb),['第一册：入门 › 基础知识','第二册：进阶']);
 }));

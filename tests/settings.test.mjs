@@ -67,7 +67,7 @@ test('extension CLI invocation supports an installation path with spaces', () =>
     execFileSync(process.execPath, [script,'--settings',path.join(tmp,'settings.json'),'--settings-only','--code',cli]);
     const calls = fs.readFileSync(log,'utf8').replaceAll('"','');
     assert.match(calls, /--install-extension openai.chatgpt/);
-    assert.match(calls, /paper-writing-1.2.0.vsix/);
+    assert.match(calls, /paper-writing-1.2.1.vsix/);
     assert.equal(calls.trim().split(/\r?\n/).length, 13);
   } finally { fs.rmSync(tmp, {recursive:true,force:true}); }
 });
