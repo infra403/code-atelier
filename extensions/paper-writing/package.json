@@ -2,7 +2,7 @@
   "name": "paper-writing",
   "displayName": "纸页 · Claude 风格写作",
   "description": "Claude 暖白写作主题、多色标记与跨分册书架导航。",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "publisher": "local",
   "engines": {
     "vscode": "^1.85.0"
@@ -23,7 +23,8 @@
     ],
     "markdown.previewStyles": [
       "./styles/markdown.css",
-      "./styles/navigation.css"
+      "./styles/navigation.css",
+      "./styles/diagram-reader.css"
     ],
     "commands": [
       {
@@ -531,7 +532,10 @@
         }
       }
     },
-    "markdown.markdownItPlugins": true
+    "markdown.markdownItPlugins": true,
+    "markdown.previewScripts": [
+      "./diagram-reader.js"
+    ]
   },
   "main": "./extension.js",
   "activationEvents": [
@@ -557,6 +561,7 @@
     "README.md",
     "LICENSE",
     "navigation.js",
-    "book-index.js"
+    "book-index.js",
+    "diagram-reader.js"
   ]
 }

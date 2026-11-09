@@ -1,0 +1,36 @@
+/* A separate reading surface; the existing theme and inline Mermaid controls stay intact. */
+.paper-diagram-actions, .paper-diagram-dialog {
+  --diagram-paper: var(--vscode-editor-background, #faf9f5);
+  --diagram-ink: var(--vscode-editor-foreground, #30302c);
+  --diagram-rule: var(--vscode-panel-border, #ded8cd);
+  --diagram-accent: var(--vscode-textLink-foreground, #a14e32);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.paper-diagram-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 22px 0 -18px; font-size: 12px; color: var(--diagram-ink); }
+.paper-diagram-actions span { opacity: .7; }
+.paper-diagram-actions button, .paper-diagram-toolbar button {
+  font: inherit; font-size: 13px; color: var(--diagram-accent); background: var(--diagram-paper);
+  border: 1px solid var(--diagram-rule); border-radius: 6px; padding: 6px 10px; cursor: pointer;
+}
+.paper-diagram-actions button:hover, .paper-diagram-toolbar button:hover { background: var(--vscode-toolbar-hoverBackground, #eee9df); }
+.paper-diagram-actions button:focus-visible, .paper-diagram-toolbar button:focus-visible { outline: 2px solid var(--diagram-accent); outline-offset: 2px; }
+.paper-diagram-dialog {
+  position: fixed; inset: 12px; width: calc(100vw - 24px); height: calc(100vh - 24px);
+  max-width: none; max-height: none; margin: 0; padding: 0; box-sizing: border-box;
+  border: 1px solid var(--diagram-rule); border-radius: 10px; color: var(--diagram-ink); background: var(--diagram-paper);
+  box-shadow: 0 12px 60px #0003; overflow: hidden; line-height: 1.5;
+}
+.paper-diagram-dialog[open] { display: flex; flex-direction: column; }
+.paper-diagram-dialog::backdrop { background: #25231f60; }
+.paper-diagram-toolbar { display: flex; flex-shrink: 0; align-items: center; flex-wrap: wrap; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--diagram-rule); }
+.paper-diagram-toolbar strong { margin-right: auto; white-space: nowrap; font-size: 14px; }
+.paper-diagram-toolbar output { min-width: 42px; text-align: center; font: 12px Menlo, Consolas, monospace; }
+.paper-diagram-viewport { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; cursor: grab; touch-action: none; }
+.paper-diagram-viewport.is-dragging { cursor: grabbing; }
+.paper-diagram-dialog .paper-diagram-canvas.mermaid {
+  box-sizing: border-box; display: grid; place-items: center; width: max-content; min-width: 100%; min-height: 100%;
+  padding: 24px; margin: 0; user-select: none;
+}
+.paper-diagram-canvas > svg { display: block; flex: none; }
+.paper-diagram-hint { flex-shrink: 0; padding: 8px 14px; border-top: 1px solid var(--diagram-rule); font-size: 12px; opacity: .75; }
+@media print { .paper-diagram-actions, .paper-diagram-dialog { display: none !important; } }
