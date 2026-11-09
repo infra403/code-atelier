@@ -1,4 +1,6 @@
-# 纸页 · Claude 写作与标记
+# Code Atelier · 编辑器工坊
+
+VS Code 的外观与工作体验工具箱。当前扩展提供暖白主题、Markdown 标记、书架导航和图表阅读；更多界面美化将持续迭代。
 
 ## 一键阅读模式（1.2.0）
 
@@ -25,13 +27,13 @@
 
 ## 图表
 
-使用当前 VS Code 内置的 Mermaid 渲染器。旧的 `bierner.markdown-mermaid` 已停用，避免两个渲染器争用同一张图。图表采用暖白背景、陶土色线条与圆角节点，保留缩放、平移和重置按钮。未修改书稿中的 Mermaid 内容。
+使用当前 VS Code 内置的 Mermaid 渲染器。如果安装了 `bierner.markdown-mermaid` 且出现冲突，请停用重复渲染器。图表采用暖白背景、陶土色线条与圆角节点，保留缩放、平移和重置按钮。未修改书稿中的 Mermaid 内容。
 
 图表上方新增 **放大阅读**。打开后按可读字号显示原始矢量图，支持拖动平移、滚轮或 ± 缩放、「全图」与「清晰字号」切换；按 Esc / 关闭返回原阅读位置。长图不再需要反复点缩放按钮才能看清文字。
 
 ## 安装与维护
 
-本扩展随 [VS Code 配置仓库](https://github.com/infra403/vscode-claude-dev-setup) 提供；使用根目录安装脚本，或通过“扩展：从 VSIX 安装”选择 `dist/paper-writing-1.2.3.vsix`。
+本扩展随 [VS Code 配置仓库](https://github.com/infra403/code-atelier) 提供；使用根目录安装脚本，或通过“扩展：从 VSIX 安装”选择 `dist/paper-writing-1.3.0.vsix`。
 
 源代码、调色板和图标均包含在仓库中。只对 Markdown 选区进行标记；支持撤销。颜色与高亮使用内联 HTML，需要支持 HTML 的 Markdown 预览器。
 

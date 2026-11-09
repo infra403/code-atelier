@@ -1,6 +1,6 @@
 {
-  "name": "vscode-claude-dev-setup",
-  "version": "1.1.0",
+  "name": "code-atelier",
+  "version": "1.3.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -9,7 +9,7 @@
   "scripts": {
     "setup": "node scripts/setup.mjs",
     "check": "node --test tests/*.test.*",
-    "build:extension": "cd extensions/paper-writing && vsce package --no-dependencies --out ../../dist/paper-writing-1.2.3.vsix"
+    "build:extension": "cd extensions/paper-writing && vsce package --no-dependencies --out ../../dist/paper-writing-1.3.0.vsix"
   },
   "dependencies": {
     "jsonc-parser": "3.3.1"
@@ -19,5 +19,11 @@
   },
   "overrides": {
     "minimatch": "11.0.5"
+  },
+  "description": "A personal VS Code atelier: appearance, Markdown reading and annotation, diagrams, and optional development presets.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/infra403/code-atelier.git"
   }
 }

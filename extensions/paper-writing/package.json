@@ -1,8 +1,8 @@
 {
   "name": "paper-writing",
-  "displayName": "纸页 · Claude 风格写作",
-  "description": "Claude 暖白写作主题、多色标记与跨分册书架导航。",
-  "version": "1.2.3",
+  "displayName": "Code Atelier · 编辑器工坊",
+  "description": "暖白主题、Markdown 多色标记、书架导航与独立图表全屏。",
+  "version": "1.3.0",
   "publisher": "local",
   "engines": {
     "vscode": "^1.85.0"
@@ -636,7 +636,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/infra403/vscode-claude-dev-setup.git",
+    "url": "https://github.com/infra403/code-atelier.git",
     "directory": "extensions/paper-writing"
   },
   "files": [
@@ -653,5 +653,9 @@
     "diagram-fullscreen.js",
     "standalone-viewer.js",
     "viewer/**"
-  ]
+  ],
+  "homepage": "https://github.com/infra403/code-atelier",
+  "bugs": {
+    "url": "https://github.com/infra403/code-atelier/issues"
+  }
 }

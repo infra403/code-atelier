@@ -145,7 +145,7 @@ try {
       }
       if (cli) {
         for (const id of JSON.parse(fs.readFileSync(path.join(root, 'config/extensions.json'), 'utf8'))) run(cli, ['--install-extension', id]);
-        run(cli, ['--install-extension', path.join(root, 'dist/paper-writing-1.2.3.vsix'), '--force']);
+        run(cli, ['--install-extension', path.join(root, 'dist/paper-writing-1.3.0.vsix'), '--force']);
       }
       if (runtime && !win) {
         fs.mkdirSync(binRoot, { recursive: true });
