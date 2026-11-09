@@ -9,7 +9,7 @@
   "scripts": {
     "setup": "node scripts/setup.mjs",
     "check": "node --test tests/*.test.*",
-    "build:extension": "cd extensions/paper-writing && vsce package --no-dependencies --out ../../dist/paper-writing-1.2.2.vsix"
+    "build:extension": "cd extensions/paper-writing && vsce package --no-dependencies --out ../../dist/paper-writing-1.2.3.vsix"
   },
   "dependencies": {
     "jsonc-parser": "3.3.1"

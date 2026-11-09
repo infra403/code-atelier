@@ -89,6 +89,9 @@ function activate(context) {
   for (const [command, kind] of Object.entries({ toggleColor: 'color', toggleHighlight: 'highlight', toggleBold: 'bold', moreMarks: 'more' })) {
     context.subscriptions.push(vscode.commands.registerCommand(`paperWriting.${command}`, resource => format(kind, resource)));
   }
-  return require('./navigation').registerNavigation(context);
+  require('./diagram-fullscreen').registerDiagramFullscreen(context);
+  const navigation = require('./navigation').registerNavigation(context);
+  const standalone = require('./standalone-viewer').registerStandaloneViewer(context);
+  return { extendMarkdownIt(md) { return standalone.extendMarkdownIt(navigation.extendMarkdownIt(md)); } };
 }
 module.exports = { activate };

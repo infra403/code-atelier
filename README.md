@@ -145,3 +145,12 @@ npm run build:extension
 源机器的 Python、前端、Go 和 Delve 已完成示例运行验证。仓库不包含任何个人项目、书稿、账户令牌、聊天记录、原始 `.zshrc` 或本机绝对路径。
 
 参考：[VS Code CLI](https://code.visualstudio.com/docs/configure/command-line) · [设置说明](https://code.visualstudio.com/docs/configure/settings) · [Codex IDE](https://developers.openai.com/codex/ide/)
+
+### 图片单独全屏（鼠标操作）
+
+图表旁和「放大阅读」工具栏均有 **图片单独全屏 ↗**。点击后在本机默认浏览器打开独立矢量看图页，再点 **图片单独全屏 ⛶**，屏幕只保留图表，VS Code 界面和浏览器标签栏都会隐藏。
+
+- 鼠标滚轮缩放，按住左键拖动；「全图」查看完整关系，「清晰字号」恢复阅读尺寸。
+- 全屏时操作栏会自动隐藏；移动鼠标显示，再点 **退出图片全屏**，也可按 Esc。
+- 保留原图的颜色和矢量文字；原来的双栏和书稿不受影响。图表只在本机处理，不上传外部服务。
+- 如需同时保留 VS Code 工具栏，预览标签栏另有「预览铺满屏幕」按钮。再次点击退出会恢复原双栏。

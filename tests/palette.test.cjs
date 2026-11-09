@@ -11,7 +11,7 @@ function harness(pick) {
   const editor={document,selections:[new Selection(1,3)],edits:[],async edit(builder){builder({replace:(range,text)=>editor.edits.push({range,text})});return true;}};
   const api={Uri,Range,Selection,ThemeIcon:class{},ConfigurationTarget:{Global:1},workspace:{getConfiguration:()=>({get:key=>settings[key],update:async(key,value)=>{settings[key]=value}})},QuickPickItemKind:{Separator:-1},window:{activeTextEditor:editor,visibleTextEditors:[editor],showInformationMessage:message=>messages.push(message),setStatusBarMessage(){},showQuickPick:async items=>{pickerCalls++;return pick({items,document,editor,api})}},commands:{registerCommand:(id,f)=>(commands[id]=f,{dispose(){}})}};
   const module={exports:{}};
-  vm.runInNewContext(fs.readFileSync(__dirname+'/../extensions/paper-writing/extension.js','utf8'),{module,require:id=>id==='vscode'?api:id==='./navigation'?{registerNavigation(){}}:{planMark,PALETTES}});
+  vm.runInNewContext(fs.readFileSync(__dirname+'/../extensions/paper-writing/extension.js','utf8'),{module,require:id=>id==='vscode'?api:id==='./navigation'?{registerNavigation(){}}:id==='./standalone-viewer'?{registerStandaloneViewer(){}}:id==='./diagram-fullscreen'?{registerDiagramFullscreen(){}}:{planMark,PALETTES}});
   module.exports.activate({subscriptions:[],extensionUri:new Uri('file:///extension'),globalState:{get(){},async update(){}}});
   return {commands,editor,messages,settings,get pickerCalls(){return pickerCalls}};
 }

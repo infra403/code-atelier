@@ -2,7 +2,7 @@
   "name": "paper-writing",
   "displayName": "纸页 · Claude 风格写作",
   "description": "Claude 暖白写作主题、多色标记与跨分册书架导航。",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "publisher": "local",
   "engines": {
     "vscode": "^1.85.0"
@@ -221,6 +221,30 @@
         "command": "paperWriting.readingMode",
         "title": "纸页：进入／退出阅读模式",
         "icon": "$(open-preview)"
+      },
+      {
+        "command": "paperWriting.enterDiagramFullscreen",
+        "title": "预览铺满屏幕（保留工具栏）",
+        "category": "纸页",
+        "icon": "$(screen-full)"
+      },
+      {
+        "command": "paperWriting.expandDiagram",
+        "title": "预览铺满屏幕（保留工具栏）",
+        "category": "纸页",
+        "icon": "$(screen-full)"
+      },
+      {
+        "command": "paperWriting.exitDiagramFullscreen",
+        "title": "退出全屏看图 · 恢复双栏",
+        "category": "纸页",
+        "icon": "$(screen-normal)"
+      },
+      {
+        "command": "paperWriting.exitDiagramFocus",
+        "title": "退出全屏看图 · 恢复双栏",
+        "category": "纸页",
+        "icon": "$(screen-normal)"
       }
     ],
     "menus": {
@@ -324,6 +348,26 @@
           "command": "paperWriting.readingMode",
           "when": "editorLangId == markdown",
           "group": "navigation@0.0"
+        },
+        {
+          "command": "paperWriting.enterDiagramFullscreen",
+          "when": "(activeWebviewPanelId == 'markdown.preview' || activeWebviewPanelId == 'vscode.markdown.preview.editor') && !paperWriting.diagramFullscreen && !isFullscreen",
+          "group": "navigation@0"
+        },
+        {
+          "command": "paperWriting.expandDiagram",
+          "when": "(activeWebviewPanelId == 'markdown.preview' || activeWebviewPanelId == 'vscode.markdown.preview.editor') && !paperWriting.diagramFullscreen && isFullscreen",
+          "group": "navigation@0"
+        },
+        {
+          "command": "paperWriting.exitDiagramFullscreen",
+          "when": "paperWriting.diagramFullscreen && isFullscreen",
+          "group": "navigation@0"
+        },
+        {
+          "command": "paperWriting.exitDiagramFocus",
+          "when": "paperWriting.diagramFullscreen && !isFullscreen",
+          "group": "navigation@0"
         }
       ],
       "editor/context": [
@@ -459,6 +503,22 @@
         {
           "command": "paperWriting.highlight.rose",
           "when": "editorLangId == markdown && config.paperWriting.highlightColor == rose"
+        },
+        {
+          "command": "paperWriting.enterDiagramFullscreen",
+          "when": "(activeWebviewPanelId == 'markdown.preview' || activeWebviewPanelId == 'vscode.markdown.preview.editor') && !paperWriting.diagramFullscreen && !isFullscreen"
+        },
+        {
+          "command": "paperWriting.expandDiagram",
+          "when": "(activeWebviewPanelId == 'markdown.preview' || activeWebviewPanelId == 'vscode.markdown.preview.editor') && !paperWriting.diagramFullscreen && isFullscreen"
+        },
+        {
+          "command": "paperWriting.exitDiagramFullscreen",
+          "when": "paperWriting.diagramFullscreen && isFullscreen"
+        },
+        {
+          "command": "paperWriting.exitDiagramFocus",
+          "when": "paperWriting.diagramFullscreen && !isFullscreen"
         }
       ]
     },
@@ -535,11 +595,38 @@
     "markdown.markdownItPlugins": true,
     "markdown.previewScripts": [
       "./diagram-reader.js"
+    ],
+    "keybindings": [
+      {
+        "command": "paperWriting.enterDiagramFullscreen",
+        "key": "ctrl+alt+enter",
+        "mac": "cmd+alt+enter",
+        "when": "(activeWebviewPanelId == 'markdown.preview' || activeWebviewPanelId == 'vscode.markdown.preview.editor') && !paperWriting.diagramFullscreen && !isFullscreen"
+      },
+      {
+        "command": "paperWriting.expandDiagram",
+        "key": "ctrl+alt+enter",
+        "mac": "cmd+alt+enter",
+        "when": "(activeWebviewPanelId == 'markdown.preview' || activeWebviewPanelId == 'vscode.markdown.preview.editor') && !paperWriting.diagramFullscreen && isFullscreen"
+      },
+      {
+        "command": "paperWriting.exitDiagramFullscreen",
+        "key": "ctrl+alt+enter",
+        "mac": "cmd+alt+enter",
+        "when": "paperWriting.diagramFullscreen && isFullscreen"
+      },
+      {
+        "command": "paperWriting.exitDiagramFocus",
+        "key": "ctrl+alt+enter",
+        "mac": "cmd+alt+enter",
+        "when": "paperWriting.diagramFullscreen && !isFullscreen"
+      }
     ]
   },
   "main": "./extension.js",
   "activationEvents": [
-    "onLanguage:markdown"
+    "onLanguage:markdown",
+    "onUri"
   ],
   "capabilities": {
     "untrustedWorkspaces": {
@@ -562,6 +649,9 @@
     "LICENSE",
     "navigation.js",
     "book-index.js",
-    "diagram-reader.js"
+    "diagram-reader.js",
+    "diagram-fullscreen.js",
+    "standalone-viewer.js",
+    "viewer/**"
   ]
 }

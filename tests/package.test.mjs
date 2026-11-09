@@ -24,5 +24,5 @@ test('theme, preview and current-color commands are bundled in local extension',
     assert.ok(manifest.files.includes(script.replace(/^\.\//,'')), `preview script must be packaged: ${script}`);
   }
   assert.ok(manifest.contributes.commands.some(c=>c.command==='paperWriting.paletteSettings'));
-  assert.ok(fs.existsSync(path.join(root,'dist/paper-writing-1.2.2.vsix')));
+  assert.ok(fs.existsSync(path.join(root,'dist/paper-writing-1.2.3.vsix')));
 });

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>纸页 · 独立看图</title><link rel="stylesheet" href="viewer.css"><script defer src="viewer.js"></script></head>
+<body>
+<main id="reader" aria-label="独立图表阅读">
+  <div id="viewport" tabindex="0" aria-label="图表：鼠标拖动平移，滚轮缩放"><div id="canvas"><img id="diagram" alt="独立矢量图表" draggable="false"></div></div>
+  <nav id="toolbar" aria-label="图表操作">
+    <button id="minus" title="缩小">−</button><output id="percent" aria-label="缩放比例">100%</output><button id="plus" title="放大">+</button>
+    <button id="fit">全图</button><button id="readable">清晰字号</button><button id="fullscreen">图片单独全屏 ⛶</button>
+  </nav>
+  <p id="hint" role="status">滚轮缩放 · 拖动平移 · 全屏后移到屏幕上沿显示按钮</p>
+</main>
+</body></html>
