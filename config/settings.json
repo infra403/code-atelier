@@ -190,5 +190,6 @@
     "**/.pytest_cache": true,
     "**/.ruff_cache": true
   },
-  "chatgpt.localeOverride": "zh-CN"
+  "chatgpt.localeOverride": "zh-CN",
+  "markdown.preview.openMarkdownLinks": "inEditor"
 }

@@ -1,5 +1,13 @@
 # 纸页 · Claude 写作与标记
 
+## 一键阅读模式（1.2.0）
+
+点击工具栏“进入／退出阅读模式”：自动左侧划词、右侧阅读，保留原来的标记按钮。
+
+通过“纸页：添加书库”选择电子书所在文件夹。预览页顶提供“上一章／目录／下一章／切换书籍”，支持 README 目录内多层分册连续阅读。底部状态栏支持搜索章节和书籍，并记住每本书上次打开的章节。
+
+阅读模式左侧默认占 40%，可用 `paperWriting.readingEditorRatio` 调整。再次点击可恢复原有分栏布局。书架只读取文件；导航不会写入书稿正文。
+
 保留原来的 Claude 暖白主题。编辑器工具栏：
 
 - **B**：加粗，再次点击取消。
@@ -21,6 +29,6 @@
 
 ## 安装与维护
 
-本扩展随 [VS Code 配置仓库](https://github.com/infra403/vscode-claude-dev-setup) 提供；使用根目录安装脚本，或通过“扩展：从 VSIX 安装”选择 `dist/paper-writing-1.1.0.vsix`。
+本扩展随 [VS Code 配置仓库](https://github.com/infra403/vscode-claude-dev-setup) 提供；使用根目录安装脚本，或通过“扩展：从 VSIX 安装”选择 `dist/paper-writing-1.2.0.vsix`。
 
 源代码、调色板和图标均包含在仓库中。只对 Markdown 选区进行标记；支持撤销。颜色与高亮使用内联 HTML，需要支持 HTML 的 Markdown 预览器。

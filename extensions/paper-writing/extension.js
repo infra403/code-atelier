@@ -89,5 +89,6 @@ function activate(context) {
   for (const [command, kind] of Object.entries({ toggleColor: 'color', toggleHighlight: 'highlight', toggleBold: 'bold', moreMarks: 'more' })) {
     context.subscriptions.push(vscode.commands.registerCommand(`paperWriting.${command}`, resource => format(kind, resource)));
   }
+  return require('./navigation').registerNavigation(context);
 }
 module.exports = { activate };
