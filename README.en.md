@@ -14,7 +14,7 @@ All screenshots show the actual extension using the original [sample book](examp
 
 - **Appearance:** warm paper, charcoal text, terracotta accents, coordinated preview styles, and cursor/hover preferences.
 - **Writing:** bold, italic, underline, strikethrough, six text colors, and six highlight colors. Configure a color once, then apply it with one click. Toolbar icons show the configured color.
-- **Reading:** one command opens source on the left and preview on the right. Search your bookshelf, navigate nested volumes, and resume the last chapter.
+- **Reading:** one command opens source on the left and preview on the right. Search your bookshelf, navigate nested volumes, and resume the last chapter. Use **本文目录** to jump to a heading in the current article.
 - **Diagrams:** zoom and pan Mermaid SVGs, or open a local browser viewer for true fullscreen. Diagram snapshots stay on your machine.
 - **Optional development presets:** Python, frontend, Go, and the official Codex extension, with macOS/Windows installers and settings backup/restore.
 
@@ -34,7 +34,7 @@ All screenshots show the actual extension using the original [sample book](examp
 ## Start with the extension
 
 1. Install the current stable VS Code.
-2. Download `paper-writing-1.3.0.vsix` from the [latest release](https://github.com/infra403/code-atelier/releases/latest).
+2. Download the version’s `.vsix` file from the [latest release](https://github.com/infra403/code-atelier/releases/latest).
 3. Run **Extensions: Install from VSIX…** and select the file.
 4. Select the **纸页 · Claude** color theme and open a trusted Markdown folder.
 5. Run **纸页：进入／退出阅读模式** to enter reading mode. Select text in the source editor to use the formatting buttons.
@@ -44,6 +44,10 @@ The extension is distributed as a VSIX; it is not yet listed on the Marketplace.
 Open `examples/studio-guide` to try the sample book. Editor spacing and cursor preferences shown in screenshots can be copied from [writing settings](docs/installation.md#仅应用截图中的写作设置); the VSIX supplies preview styles, commands and navigation independently of the development installers.
 
 ## Optional full setup
+
+Add only the outermost library folder. Nested collections and independent editions are discovered from local indexes, chapter folders, and restarted chapter numbering. Continuous course chapters remain one book. Archives and review artifacts are excluded; ambiguous or oversized trees retain their original boundary. Run `node scripts/audit-library.mjs <library> <report.json>` to audit discovery and chapter ownership without modifying manuscripts.
+
+Click **搜索书籍** in the reading preview to filter books by title, collection or folder. Combine keywords with spaces; matching ignores case. The preview shows result counts and opens the source and preview together. Search is also available from the status bar, editor magnifying-glass button and **纸页：搜索书籍** command; the status-bar picker resumes your saved reading position.
 
 ```sh
 git clone https://github.com/infra403/code-atelier.git

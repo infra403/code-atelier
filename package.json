@@ -1,6 +1,6 @@
 {
   "name": "code-atelier",
-  "version": "1.3.0",
+  "version": "1.7.1",
   "private": true,
   "type": "module",
   "engines": {
@@ -9,7 +9,7 @@
   "scripts": {
     "setup": "node scripts/setup.mjs",
     "check": "node --test tests/*.test.*",
-    "build:extension": "cd extensions/paper-writing && vsce package --no-dependencies --out ../../dist/paper-writing-1.3.0.vsix"
+    "build:extension": "cd extensions/paper-writing && vsce package --no-dependencies --out ../../dist/paper-writing-1.7.1.vsix"
   },
   "dependencies": {
     "jsonc-parser": "3.3.1"

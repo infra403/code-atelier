@@ -49,7 +49,7 @@ body[data-vscode-theme-id="纸页 · Claude"] pre {
 }
 body[data-vscode-theme-id="纸页 · Claude"] pre code { padding: 0; background: transparent; color: var(--ink); line-height: inherit; }
 body[data-vscode-theme-id="纸页 · Claude"] table {
-  display: block; width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1.5em 0; font-size: 0.94em;
+  position: relative; display: block; width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1.5em 0; font-size: 0.94em;
 }
 body[data-vscode-theme-id="纸页 · Claude"] :is(th,td) { border-bottom: 1px solid var(--rule); padding: 12px 14px; vertical-align: top; }
 body[data-vscode-theme-id="纸页 · Claude"] th { background: var(--wash); color: var(--heading); font-weight: 600; }
@@ -111,3 +111,32 @@ body[data-vscode-theme-id="纸页 · Claude"] .mermaid .flowchart-link:not([styl
 body[data-vscode-theme-id="纸页 · Claude"] .mermaid .arrowMarkerPath { fill: #997a66 !important; stroke: #997a66 !important; }
 body[data-vscode-theme-id="纸页 · Claude"] .mermaid .nodeLabel { color: #30302c !important; }
 body[data-vscode-theme-id="纸页 · Claude"] .mermaid svg { font-family: -apple-system, "PingFang SC", sans-serif !important; }
+
+/* The preview iframe resizes independently when an editor split is dragged. */
+@media screen {
+  html:has(> body[data-vscode-theme-id="纸页 · Claude"]) { padding-inline: 0; }
+  body[data-vscode-theme-id="纸页 · Claude"] {
+    --paper-prose: 48rem;
+    max-width: 100rem;
+    padding-inline: clamp(14px, 3vw, 44px);
+  }
+  body[data-vscode-theme-id="纸页 · Claude"] .markdown-body > * {
+    box-sizing: border-box;
+    max-inline-size: var(--paper-prose);
+    margin-inline: auto;
+  }
+  body[data-vscode-theme-id="纸页 · Claude"] .markdown-body > :is(
+    pre, table, .paper-text-diagram
+  ) {
+    inline-size: fit-content;
+    min-inline-size: min(100%, var(--paper-prose));
+    max-inline-size: 100%;
+  }
+  body[data-vscode-theme-id="纸页 · Claude"] .markdown-body > :is(
+    figure, .mermaid, .mermaid-wrapper, .paper-diagram-actions, .katex-block,
+    p:has(> img:only-child), p:has(> a:only-child > img:only-child)
+  ) { max-inline-size: 100%; }
+  body[data-vscode-theme-id="纸页 · Claude"] .markdown-body > :has(> :is(.paper-text-comparison, .paper-box-table)) {
+    max-inline-size: min(100%, 72rem);
+  }
+}

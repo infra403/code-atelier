@@ -5,6 +5,7 @@
     "editor.tabSize": 2,
     "editor.insertSpaces": true
   },
+  "paperWriting.autoOpenReadingMode": true,
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one",
     "editor.fontFamily": "Menlo, Consolas, \"Cascadia Mono\", \"PingFang SC\", \"Microsoft YaHei\", monospace",

@@ -92,6 +92,9 @@ function activate(context) {
   require('./diagram-fullscreen').registerDiagramFullscreen(context);
   const navigation = require('./navigation').registerNavigation(context);
   const standalone = require('./standalone-viewer').registerStandaloneViewer(context);
-  return { extendMarkdownIt(md) { return standalone.extendMarkdownIt(navigation.extendMarkdownIt(md)); } };
+  return { extendMarkdownIt(md) {
+    require('./text-diagrams').extendTextDiagrams(md);
+    return standalone.extendMarkdownIt(navigation.extendMarkdownIt(md));
+  } };
 }
 module.exports = { activate };

@@ -2,11 +2,13 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const collator = new Intl.Collator('zh-CN', { numeric: true, sensitivity: 'base' });
-const INDEX_NAMES = ['SUMMARY.md', 'CONTENTS.md', '目录.md', 'README.md', 'readme.md', 'index.md'];
-const SKIP_DIR = /^(?:\..*|node_modules|vendor|assets?|images?|figures?|media|code|scripts?|tools?|skills?|reviews?|evidence|tracking|workpacks|backups?|__pycache__)$/i;
+const CONTENTS_NAMES = ['SUMMARY.md', 'CONTENTS.md', '目录.md', 'TOC.md'];
+const INDEX_NAMES = [...CONTENTS_NAMES, 'README.md', 'readme.md', 'index.md', 'INDEX.md'];
+const SKIP_DIR = /^(?:[._].*|node_modules|vendor|assets?|images?|figures?|media|code|scripts?|tools?|skills?|reviews?|qa_reports|evidence|tracking|workpacks|backups?|history|raw(?:[_-].*)?|originals?|lab|examples|projects|工作副本|来源归档|检查报告)$/i;
 const AUXILIARY = /^(?:AGENTS|CLAUDE|LICENSE|CHANGELOG|GLOSSARY|SOURCE[S_].*|SOURCE_MAP|source_mapping|editorial.*|.*review_log|TRANSLATION_(?:NOTES|REVIEW)|审校.*|审稿.*|校对.*|来源映射.*|00[_ -].*(?:来源|审校).*)\.(?:md|markdown)$/i;
 const isMarkdown = file => /\.(md|markdown)$/i.test(file);
 const isIndex = file => INDEX_NAMES.some(name => name.toLowerCase() === path.basename(file).toLowerCase());
+const MANUSCRIPT_DIR = /^(?:manuscripts?|chapters?|processed|markdown|正文|书稿)$/i;
 function inside(root, file) {
   const rel = path.relative(root, file);
   return rel === '' || (!rel.startsWith('..' + path.sep) && rel !== '..' && !path.isAbsolute(rel));
@@ -51,10 +53,84 @@ function localDestination(root, from, target) {
     return useful(root, file) && safeFile(root, file) ? file : null;
   } catch { return null; }
 }
-function indexIn(folder) { return INDEX_NAMES.map(name => path.join(folder, name)).find(file => safeFile(folder, file)); }
-function bookTitle(root, entry) { const readme=['README.md','readme.md'].map(n=>path.join(root,n)).find(p=>safeFile(root,p)); return readme||entry?titleOf(readme||entry):path.basename(root); }
-function buildBook(root) {
+function indexIn(folder, names = INDEX_NAMES) { return names.map(name => path.join(folder, name)).find(file => safeFile(folder, file)); }
+function readingRoot(folder, depth = 0) {
+  // Preserve an authored top-level book, including its nested volumes. Only
+  // unwrap a content container when it has one unambiguous reading index.
+  if (indexIn(folder) || depth >= 5) return folder;
+  let entries; try { entries = fs.readdirSync(folder, {withFileTypes:true}); } catch { return folder; }
+  const candidates = entries.filter(e => e.isDirectory() && MANUSCRIPT_DIR.test(e.name))
+    .map(e => readingRoot(path.join(folder,e.name), depth+1)).filter(dir => indexIn(dir));
+  return candidates.length === 1 ? candidates[0] : folder;
+}
+function bookTitle(root, entry) { const readme=['README.md','readme.md','INDEX.md','index.md'].map(n=>path.join(root,n)).find(p=>safeFile(root,p)); return readme||entry?titleOf(readme||entry):path.basename(root); }
+const discoveryCache = new Map();
+function clearDiscoveryCache() { discoveryCache.clear(); }
+function chapterNumber(file) {
+  const name = path.basename(file);
+  const moduleChapter = name.match(/^\d{1,3}[_-](\d{1,3})(?=[_. -])/);
+  if (moduleChapter) return Number(moduleChapter[1]);
+  const match = name.match(/^(?:(?:chapter|ch|c)[_ -]?)?(\d{1,3})(?=[_. -])/i);
+  return match ? Number(match[1]) : null;
+}
+// Recognize independent reading units, not merely directories with README files.
+// Repeated chapter sequences and local contents distinguish books from parts of
+// a single continuous course. No library names or machine paths are special-cased.
+function discoverBooks(container) {
+  container = path.resolve(container);
+  const cached = discoveryCache.get(container);
+  if (cached && Date.now() - cached.time < 30000) return cached.value;
+  let scanned = 0, truncated = false;
+  function scan(folder, depth = 0) {
+    if (depth > 7 || scanned >= 600) { truncated = true; return []; }
+    scanned++;
+    let entries; try { entries = fs.readdirSync(folder, {withFileTypes:true}).sort((a,b)=>collator.compare(a.name,b.name)); } catch { return []; }
+    const children = entries.filter(e=>e.isDirectory() && !SKIP_DIR.test(e.name));
+    const descendants = children.flatMap(e=>scan(path.join(folder,e.name),depth+1));
+    let entry = indexIn(folder);
+    const manuscriptName = /(?:^|[_ -])(?:book|monograph|vol\d+)(?:$|[_ -])|书稿|专著|第.+卷/i.test(path.basename(folder));
+    if (!entry && !manuscriptName) return descendants;
+    const own = new Set();
+    const add = file => {
+      if (useful(container,file) && !isIndex(file) && !descendants.some(book=>inside(book.root,file)) && safeFile(container,file)) own.add(file);
+    };
+    for (const e of entries) if (e.isFile()) add(path.join(folder,e.name));
+    // Indexes may point into chapter folders or numbered sections. Reading only
+    // the indexes keeps discovery independent of the size of chapter bodies.
+    const text = entry ? readHead(entry) : '';
+    for (const link of links(text)) { const file = localDestination(folder,entry,link.target); if (file) add(file); }
+    for (const e of children.filter(e=>/^(?:chapters?|正文)$/i.test(e.name))) {
+      const dir = path.join(folder,e.name);
+      try { for (const f of fs.readdirSync(dir,{withFileTypes:true})) if(f.isFile()) add(path.join(dir,f.name)); } catch {}
+    }
+    const numbered = [...own].map(chapterNumber).filter(n=>n !== null && n > 0);
+    const sequence = new Set(numbered);
+    const identity = /本书|全书|专著|独立.{0,8}卷|[《》]|\bbook\b/i.test(bookTitle(folder,entry)+'\n'+text.slice(0,12000));
+    const section = /^(?:(?:part|section|chapter)[_ -]?\d+|第[\d一二三四五六七八九十]+[篇部分章])/i.test(path.basename(folder));
+    const dedicated = children.some(e=>/^chapters$/i.test(e.name));
+    const independent = !section && ((sequence.has(1) && (sequence.size >= 2 || (dedicated && identity))) || (descendants.length && sequence.size >= 2));
+    if (independent) {
+      const title = entry ? bookTitle(folder,entry) : path.basename(folder);
+      entry ||= [...own].filter(f=>chapterNumber(f)>0).sort((a,b)=>collator.compare(a,b))[0];
+      return [{root:folder,entry,title,reason:dedicated?'独立目录与章节文件夹':manuscriptName&&!text?'独立书稿文件夹与重新起始的章节编号':'独立目录与重新起始的章节编号',evidence:[...own].filter(f=>chapterNumber(f)>0)},...descendants];
+    }
+    return descendants;
+  }
+  let books = scan(container);
+  // A sole nested manuscript is still the same book; retain its authored outer
+  // boundary. Splitting only happens with evidence for at least two books.
+  const split = !truncated && books.length >= 2;
+  if (!split) books = [{root:readingRoot(container),reason:truncated?'达到扫描上限，保留原书边界':'单本书或证据不足，保留原书边界'}];
+  const value = {container,books,split,scanned,truncated};
+  if (discoveryCache.size >= 256) discoveryCache.delete(discoveryCache.keys().next().value);
+  discoveryCache.set(container,{time:Date.now(),value});
+  return value;
+}
+function buildBook(root, {separateBooks = false} = {}) {
   root = path.resolve(root);
+  const discovery = separateBooks ? discoverBooks(root) : null;
+  const excluded = discovery?.split ? discovery.books.filter(b=>b.root!==root).map(b=>b.root) : [];
+  const excludedFile = file => excluded.some(dir=>inside(dir,file));
   const entry = indexIn(root), visited = new Set(), seen = new Set(), chapters = [], groupLabels = {};
   let truncated = false;
   function add(file) {
@@ -68,7 +144,7 @@ function buildBook(root) {
     visited.add(index);
     for (const link of links(readHead(index))) {
       const file = localDestination(root, index, link.target);
-      if (!file) continue;
+      if (!file || excludedFile(file)) continue;
       if (isIndex(file)) {
         // A contents page's "back to README" link must not import other editions.
         if (path.dirname(file) === path.dirname(index) && path.basename(index).toLowerCase() !== 'readme.md') continue;
@@ -87,24 +163,42 @@ function buildBook(root) {
       let entries; try { entries = fs.readdirSync(dir, { withFileTypes: true }).sort((a,b) => collator.compare(a.name,b.name)); } catch { return; }
       for (const item of entries) {
         const file = path.join(dir, item.name);
-        if (item.isDirectory() && !SKIP_DIR.test(item.name)) walk(file, depth + 1);
+        if (item.isDirectory() && !SKIP_DIR.test(item.name) && !excludedFile(file)) walk(file, depth + 1);
         else if (item.isFile() && useful(root,file) && !isIndex(file)) add(file);
       }
     }
     walk(root);
   }
-  return { root, entry, title: bookTitle(root,entry), chapters, groupLabels, truncated };
+  // A landing page can link to editorial records alongside its chapter list.
+  // Keep explicit contents files authoritative, including their appendices.
+  const chapterDir = path.join(root, 'chapters');
+  const landingPage = entry && path.basename(entry).toLowerCase() === 'readme.md';
+  const readingOrder = landingPage && chapters.some(ch => inside(chapterDir, ch.file))
+    ? chapters.filter(ch => !/^(?:PROGRESS|SYMPTOM_INDEX|OUTLINE)\.md$/i.test(path.relative(root, ch.file)))
+    : chapters;
+  return { root, entry, title: bookTitle(root,entry), chapters: readingOrder, groupLabels, truncated };
 }
 function findBookRoot(file, libraries = [], workspaceRoots = []) {
   file = path.resolve(file);
-  // A library's immediate child is the book boundary, even with many nested volumes.
+  // A library's immediate child is a book, sometimes with its reading index
+  // under a manuscript container alongside raw sources and editorial records.
   for (const library of [...libraries].sort((a,b) => b.length-a.length)) {
-    if (!inside(library, file) || file === library) continue;
+    if (!inside(library, file)) continue;
     const parts = path.relative(library, file).split(path.sep);
-    if (parts.length > 1 && !SKIP_DIR.test(parts[0])) return path.join(library, parts[0]);
+    if (parts.length <= 1 || SKIP_DIR.test(parts[0])) return null;
+    if (parts.slice(0,-1).some(p=>SKIP_DIR.test(p))) return null;
+    const matches = discoverBooks(path.join(library, parts[0])).books.filter(b=>inside(b.root,file));
+    return matches.sort((a,b)=>b.root.length-a.root.length)[0]?.root || null;
+  }
+  const workspace = workspaceRoots.filter(w => inside(w,file)).sort((a,b) => b.length-a.length)[0];
+  // An authored table of contents also identifies a book outside the configured shelves.
+  if (workspace && isMarkdown(file)) {
+    for (let folder = path.dirname(file); inside(workspace, folder); folder = path.dirname(folder)) {
+      if (indexIn(folder, CONTENTS_NAMES)) return folder;
+      if (folder === workspace || folder === path.dirname(folder)) break;
+    }
   }
   if (libraries.length) return null;
-  const workspace = workspaceRoots.filter(w => inside(w,file)).sort((a,b) => b.length-a.length)[0];
   if (workspace && indexIn(workspace)) return workspace;
   let folder = path.dirname(file);
   for (let n = 0; n < 10; n++) {
@@ -113,8 +207,42 @@ function findBookRoot(file, libraries = [], workspaceRoots = []) {
   }
   return null;
 }
+function collectionEntry(file, libraries = []) {
+  for (const library of [...libraries].sort((a,b)=>a.length-b.length)) {
+    if (!inside(library,file)) continue;
+    const parts=path.relative(library,file).split(path.sep);
+    if(parts.length<2 || parts.slice(0,-1).some(p=>SKIP_DIR.test(p))) continue;
+    const container=path.join(library,parts[0]);
+    if(discoverBooks(container).split) return path.dirname(file)===container && isIndex(file) && safeFile(container,file) ? file : indexIn(container) || null;
+  }
+  return null;
+}
+function buildCollection(root) {
+  root=path.resolve(root);
+  const entry=indexIn(root), discovery=discoverBooks(root);
+  const ordered=[], labels={}, explicit=new Map();
+  for(const link of entry ? links(readHead(entry)) : []) {
+    const file=localDestination(root,entry,link.target);if(!file)continue;
+    const book=discovery.books.filter(b=>inside(b.root,file)).sort((a,b)=>b.root.length-a.root.length)[0];
+    if(!book || book.root===root)continue;
+    if(!ordered.includes(book))ordered.push(book);
+    if(isIndex(file) && !labels[book.root])labels[book.root]=link.title;
+    if(!isIndex(file)) {if(!explicit.has(book.root))explicit.set(book.root,[]);if(!explicit.get(book.root).includes(file))explicit.get(book.root).push(file);}
+  }
+  for(const book of discovery.books)if(book.root!==root&&!ordered.includes(book))ordered.push(book);
+  const chapters=[],groupLabels={};let truncated=discovery.truncated;
+  for(const item of ordered) {
+    const book=buildBook(item.root,{separateBooks:true});truncated ||= book.truncated;
+    // The collection's authored chapter links take precedence over editorial
+    // outlines linked from each delivery README. Otherwise use the book's TOC.
+    const files=explicit.get(item.root);
+    chapters.push(...(files?files.map(file=>({file,title:titleOf(file),group:path.relative(root,path.dirname(file))})):book.chapters));
+    groupLabels[path.relative(root,item.root)]=labels[item.root] || item.title || book.title;
+  }
+  return {root,entry,title:bookTitle(root,entry),chapters,groupLabels,truncated,isCollection:true,bookCount:ordered.length};
+}
 function shelf(libraries) {
-  const books = [];
+  const books = [], seen = new Set();
   function nestedEntry(folder, depth=0, budget={left:120}) {
     if(depth>5 || --budget.left<0)return null;
     const index=indexIn(folder);if(index)return index;
@@ -124,12 +252,19 @@ function shelf(libraries) {
     for(const item of items){if(item.isDirectory()&&!SKIP_DIR.test(item.name)){const found=nestedEntry(path.join(folder,item.name),depth+1,budget);if(found)return found;}}
     return null;
   }
-  for (const root of libraries) {
+  const roots = [...new Set(libraries.map(folder => path.resolve(folder)))];
+  for (const root of roots) {
     let entries; try { entries = fs.readdirSync(root, {withFileTypes:true}); } catch { continue; }
     for (const d of entries) {
       if (!d.isDirectory() || SKIP_DIR.test(d.name)) continue;
-      const bookRoot = path.join(root,d.name), entry = nestedEntry(bookRoot);
-      if (entry) books.push({root:bookRoot,entry,title:bookTitle(bookRoot,entry)});
+      const container = path.join(root, d.name);
+      if (roots.includes(container)) continue;
+      for (const discovered of discoverBooks(container).books) {
+        const bookRoot = discovered.root;
+        if (roots.includes(bookRoot) || seen.has(bookRoot)) continue;
+        const entry = discovered.entry || nestedEntry(bookRoot);
+        if (entry) { seen.add(bookRoot); books.push({root:bookRoot,entry,title:discovered.title || bookTitle(bookRoot,entry),collection:container}); }
+      }
     }
   }
   return books.sort((a,b) => collator.compare(a.title,b.title));
@@ -153,10 +288,9 @@ function chapterTree(book) {
     }
     parent.children.push({type:'chapter',chapter,index});
   });
-  const wrappers=/^(?:manuscripts?|chapters?|processed|markdown|正文|书稿)$/i;
   function simplify(children){
     for(const node of children)if(node.type==='group')node.children=simplify(node.children);
-    return children.length===1 && children[0].type==='group' && wrappers.test(children[0].name)?children[0].children:children;
+    return children.length===1 && children[0].type==='group' && MANUSCRIPT_DIR.test(children[0].name)?children[0].children:children;
   }
   return simplify(root.children);
 }
@@ -183,11 +317,20 @@ function navHTML(book, file, books = []) {
       ? `<li class="paper-toc-category"><details class="paper-toc-group" open><summary>${escape(node.title)}</summary><ol>${directory(node.children)}</ol></details></li>`
       : `<li${node.index===at?' class="paper-current"':''}>${anchor(node.chapter.file,`${node.index+1}. ${node.chapter.title}`,node.index===at?'aria-current="page"':'')}</li>`).join('');
   }
-  const bookList = books.map(b=>`<li>${anchor(b.entry,b.title)}</li>`).join('');
-  const controls = `${button(previous,'← 上一章')}<details class="paper-chapter-list"><summary>目录 · ${at<0?'导读':at+1} / ${book.chapters.length}</summary><ol>${directory(chapterTree(book))}</ol></details>${button(next,at<0?'开始阅读 →':'下一章 →')}`;
+  const bookList = books.map(b=>{
+    const collection = b.collection || b.root;
+    const description = [path.basename(collection),path.relative(collection,b.root)].filter(Boolean).join(' / ');
+    return `<li data-book-search="${escape(b.title+' '+description)}">${anchor(b.entry,b.title)}<small>${escape(description)}</small></li>`;
+  }).join('');
+  const search = bookList ? `<details class="paper-shelf"><summary>搜索书籍</summary><div class="paper-shelf-panel"><label class="paper-book-search-label">搜索书籍<input class="paper-book-search-input" type="search" placeholder="书名、合集或目录 · 空格分隔关键词" autocomplete="off" spellcheck="false"></label><p class="paper-book-search-count" role="status" aria-live="polite">显示 ${books.length} / ${books.length} 本书</p><p class="paper-book-search-empty" hidden>没有找到符合条件的书籍。试试更短的书名或合集名。</p><ul aria-label="书籍搜索结果">${bookList}</ul></div></details>` : '';
+  const toc=label=>`<details class="paper-chapter-list"><summary>${label}</summary><ol>${directory(chapterTree(book))}</ol></details>`;
+  const controls = book.isCollection
+    ? `<span>合集 · ${book.bookCount} 册</span>${toc(`总目录 · ${book.chapters.length} 章`)}<span>选择分册或章节开始阅读</span>`
+    : `${button(previous,'← 上一章')}${toc(`目录 · ${at<0?'导读':at+1} / ${book.chapters.length}`)}${button(next,at<0?'开始阅读 →':'下一章 →')}`;
+  const collectionHome=book.collectionEntry?anchor(book.collectionEntry,'合集目录','class="paper-collection-home"'):'';
   return {
-    top: `<nav class="paper-book-nav" aria-label="书籍阅读导航"><div class="paper-book-title">${bookList?`<details class="paper-shelf"><summary>切换书籍</summary><ul>${bookList}</ul></details>`:''}${book.entry?anchor(book.entry,book.title):escape(book.title)}</div><div class="paper-book-controls">${controls}</div></nav>`,
-    bottom: `<nav class="paper-book-footer" aria-label="章末翻页">${button(previous,'← 上一章')}${button(next,next?'下一章 →':'已到全书末章')}</nav>`
+    top: `<nav class="paper-book-nav" aria-label="书籍阅读导航"><div class="paper-book-title">${search}${collectionHome}${book.entry?anchor(book.entry,book.title):escape(book.title)}</div><div class="paper-book-controls">${controls}</div></nav>`,
+    bottom: book.isCollection?'':`<nav class="paper-book-footer" aria-label="章末翻页">${button(previous,'← 上一章')}${button(next,next?'下一章 →':'已到全书末章')}</nav>`
   };
 }
-module.exports = { buildBook, findBookRoot, shelf, position, neighbour, chapterTree, chapterRows, navHTML, inside, links, localDestination };
+module.exports = { buildBook, buildCollection, collectionEntry, findBookRoot, shelf, discoverBooks, clearDiscoveryCache, position, neighbour, chapterTree, chapterRows, navHTML, inside, links, localDestination };

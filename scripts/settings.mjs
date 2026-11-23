@@ -35,7 +35,7 @@ export function mergeSettings(original, preset) {
   for (const item of leaves(preset)) {
     const old = getAt(before, item.path);
     // Reinstalling must keep the colors the user selected after initial setup.
-    if (['paperWriting.textColor', 'paperWriting.highlightColor'].includes(item.path[0]) && old !== undefined) continue;
+    if (['paperWriting.textColor', 'paperWriting.highlightColor', 'paperWriting.autoOpenReadingMode'].includes(item.path[0]) && old !== undefined) continue;
     if (same(old, item.value)) continue;
     changes.push({ path: item.path, existed: old !== undefined, before: old, after: item.value });
     text = replace(text, item.path, item.value);
